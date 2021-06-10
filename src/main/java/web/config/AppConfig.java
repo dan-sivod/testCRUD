@@ -5,10 +5,13 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    public AppConfig(){
+        super();
+    }
 
     // Метод, указывающий на класс конфигурации
     @Override
@@ -29,10 +32,10 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     }
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(WebConfig.class);
+    public void onStartup(ServletContext servletContext) {
 
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        appContext.register(WebConfig.class,DBConfig.class);
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
                 "SpringDispatcher", new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);

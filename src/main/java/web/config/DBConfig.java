@@ -53,7 +53,6 @@ public class DBConfig {
         jpaProp.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         jpaProp.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         factoryBean.setJpaProperties(jpaProp);
-        //        factoryBean.setAnnotatedClasses(User.class);
         return factoryBean;
     }
 
