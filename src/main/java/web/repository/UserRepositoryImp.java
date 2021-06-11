@@ -39,14 +39,12 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
         List<User> query = entityManager.createQuery("from User",User.class).getResultList();
         return query;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void deleteAllUsers() {
         List<User> usersList = getAllUsers();
         for(User user : usersList){

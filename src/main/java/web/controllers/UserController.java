@@ -16,6 +16,7 @@ public class UserController {
 
     UserService userService;
 
+    @Autowired
     UserController( UserServiceImp userServiceImp){
         this.userService = userServiceImp;
     }
