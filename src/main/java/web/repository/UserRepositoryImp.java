@@ -1,5 +1,6 @@
 package web.repository;
 
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,10 @@ import java.util.List;
 
 @Repository
 @Transactional
+//@EnableTransactionManagement
 public class UserRepositoryImp implements UserRepository {
 
-    @PersistenceContext
+    @PersistenceContext(name = "TDPersistenceUnit")
     private EntityManager entityManager;
 
     @Override

@@ -43,7 +43,11 @@ public class DBConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(getDataSource());
         factoryBean.setPackagesToScan("web.model");
+        factoryBean.setPersistenceUnitName("TDPersistenceUnit");
         HibernateJpaVendorAdapter adapter =  new HibernateJpaVendorAdapter();
+        adapter.setShowSql(true);
+        adapter.setGenerateDdl(true);
+        adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
         factoryBean.setJpaVendorAdapter(adapter);
         Properties jpaProp = new Properties();
         jpaProp.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
