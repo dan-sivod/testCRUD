@@ -17,7 +17,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@ComponentScan(value = "web")
+@ComponentScan(value = {"web"})
 public class DBConfig {
 
     private Environment env;
@@ -43,7 +43,7 @@ public class DBConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(getDataSource());
         factoryBean.setPackagesToScan("web.model");
-        factoryBean.setPersistenceUnitName("TDPersistenceUnit");
+        factoryBean.setPersistenceUnitName("persistenceUnit");
         HibernateJpaVendorAdapter adapter =  new HibernateJpaVendorAdapter();
         adapter.setShowSql(true);
         adapter.setGenerateDdl(true);

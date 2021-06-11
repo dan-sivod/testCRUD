@@ -11,10 +11,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-//@EnableTransactionManagement
 public class UserRepositoryImp implements UserRepository {
 
-    @PersistenceContext(name = "TDPersistenceUnit")
+    @PersistenceContext(name = "persistenceUnit")
     private EntityManager entityManager;
 
     @Override

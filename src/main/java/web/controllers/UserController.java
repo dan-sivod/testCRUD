@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
-import web.service.UserServiceImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    UserController( UserServiceImp userServiceImp){
+    UserController( UserService userServiceImp){
         this.userService = userServiceImp;
     }
 
@@ -30,7 +29,6 @@ public class UserController {
         model.addAttribute("messages", messages);
 
         User user = new User("1","1",1);
-        user.setId(1L);
         userService.createUser(user);
         System.out.println(userService.readUser(1));
         return "index";
