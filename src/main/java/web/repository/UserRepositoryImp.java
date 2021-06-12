@@ -28,8 +28,11 @@ public class UserRepositoryImp implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user) {
-        entityManager.merge(user);
+    public void updateUser(long id, User user) {
+        User userToBeUpdated = readUser(id);
+        userToBeUpdated.setFirstName(user.getFirstName());
+        userToBeUpdated.setLastName(user.getLastName());
+        userToBeUpdated.setAge(user.getAge());
         entityManager.flush();
     }
 

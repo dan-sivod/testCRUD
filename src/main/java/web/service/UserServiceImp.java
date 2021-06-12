@@ -27,8 +27,8 @@ public class UserServiceImp implements UserService{
         return userRepository.readUser(id);
     }
 
-    public void updateUser(User user){
-        userRepository.updateUser(user);
+    public void updateUser(long id, User user){
+        userRepository.updateUser(id, user);
     }
 
     public void deleteUser(long id){
