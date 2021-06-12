@@ -3,26 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New User</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/user}" th:object="${user}">
+<form th:method="POST" th:action="@{/}" th:object="${user}">
     <div>
         <label for="firstName">First name:</label>
-        <input type="text" th:field="*{firstName}" name="firstName">
-
+        <input type="text" th:field="*{firstName}" id="firstName"/>
         <br>
-
         <label for="lastName">Last name:</label>
-        <input type="text" id="*{lastName}" name="lastName">
-
+        <input type="text" th:field="*{lastName}" id="lastName"/>
         <br>
-
-        <label for="age">Last name:</label>
-        <input type="text" id="*{age}" name="age">
-
+        <label for="age">Age:</label>
+        <input type="text" th:field="*{age}" id="age"/>
         <br>
-
         <input type="submit" value="Add User">
     </div>
 </form>
