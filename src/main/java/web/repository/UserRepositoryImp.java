@@ -56,4 +56,15 @@ public class UserRepositoryImp implements UserRepository {
         }
         entityManager.flush();
     }
+
+    @Override
+    public User getUserByName(String name) {
+        List<User> query = entityManager.createQuery("from User",User.class).getResultList();
+        for(User user : query){
+            if (user.getUsername().equals(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
 }
