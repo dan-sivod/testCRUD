@@ -32,7 +32,7 @@
                 <td th:text="${user.getLastName()}"></td>
                 <td th:text="${user.getAge()}"></td>
                 <td>
-                    <form th:action="@{/edit/{id}(id=${user.getId()})}">
+                    <form th:action="@{/{id}/edit(id=${user.getId()})}">
                         <div>
                             <input type="submit" value="Edit user">
                         </div>

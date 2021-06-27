@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="spring_mvc.war">
+    <root id="archive" name="testCRUD.war">
       <element id="artifact" artifact-name="testCRUD:war exploded" />
     </root>
   </artifact>

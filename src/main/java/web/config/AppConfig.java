@@ -3,6 +3,7 @@ package web.config;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import web.security.SecurityConfig;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     // Метод, указывающий на класс конфигурации
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{ DBConfig.class };
+        return new Class<?>[]{ DBConfig.class, SecurityConfig.class};
     }
 
     // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
@@ -32,7 +33,7 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(WebConfig.class,DBConfig.class);
+        appContext.register(WebConfig.class,DBConfig.class,SecurityConfig.class);
         registerHiddenFieldFilter(servletContext);
     }
 
