@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String firstName;
 
     @Column(name = "last_name")
@@ -25,11 +26,14 @@ public class User implements UserDetails {
     @Column(name = "age")
     private int age;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "Roles")
-    private Set<Role> roles;
+    @ManyToMany( fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public User() {}
 
@@ -140,5 +144,17 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public static UserDetails fromUser(User user) {
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.isAccountNonExpired(),
+                user.isCredentialsNonExpired(),
+                user.isEnabled(),
+                user.isAccountNonLocked(),
+                user.getRoles()
+        );
     }
 }
