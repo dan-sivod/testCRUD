@@ -22,11 +22,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LoginSuccessHandler loginSuccessHandler;
 
+    private final LoginFailureHandler loginFailureHandler;
+
     @Autowired
     public SecurityConfig(@Qualifier("userServiceImp") UserService userService,
-                          @Qualifier("loginSuccessHandler") LoginSuccessHandler loginSuccessHandler) {
+                          @Qualifier("loginSuccessHandler") LoginSuccessHandler loginSuccessHandler,
+                          @Qualifier("loginFailureHandler") LoginFailureHandler loginFailureHandler1) {
         this.userService = userService;
         this.loginSuccessHandler = loginSuccessHandler;
+        this.loginFailureHandler = loginFailureHandler1;
     }
 
     @Bean
@@ -58,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .successHandler(loginSuccessHandler) // подключаем наш SuccessHandler для перенеправления по ролям
+                .failureHandler(loginFailureHandler)
                 .permitAll();
 
         http.logout()
