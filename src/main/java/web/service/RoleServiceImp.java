@@ -10,14 +10,26 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleServiceImp {
+public class RoleServiceImp  implements  RoleService{
+
+    private RoleRepository roleRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    public void setRoleRepo(RoleRepository roleRepo) {
+        this.roleRepository = roleRepo;
+    }
 
+    @Override
+    public Role getRoleByName(String name) {
+        return roleRepository.getRoleByName(name);
+    }
+
+    @Override
     public Role getRoleById(Long id) {
         return roleRepository.getRoleById(id);
     }
+
+    @Override
     public List<Role> getRolesList() {
         return roleRepository.getRolesList();
     }

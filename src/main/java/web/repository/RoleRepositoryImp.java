@@ -16,6 +16,10 @@ public class RoleRepositoryImp implements RoleRepository{
     @PersistenceContext(name = "persistenceUnit")
     private EntityManager entityManager;
 
+    public Role getRoleByName(String name){
+        return entityManager.find(Role.class, name);
+    }
+
     public List<Role> getRolesList() {
         List<Role> query = entityManager.createQuery("from Role ",Role.class).getResultList();
         return query;
