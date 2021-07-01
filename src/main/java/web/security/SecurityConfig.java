@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import web.config.hendler.LoginFailureHandler;
+import web.config.hendler.LoginSuccessHandler;
 import web.service.UserService;
 
 @Configuration
@@ -46,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
@@ -57,11 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 // указываем страницу с формой логина
                 .loginPage("/login")
+                .successHandler(loginSuccessHandler)// подключаем наш SuccessHandler для перенеправления по ролям
                 // указываем action с формы логина
                 .loginProcessingUrl("/login")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
-                .successHandler(loginSuccessHandler) // подключаем наш SuccessHandler для перенеправления по ролям
                 .failureHandler(loginFailureHandler)
                 .permitAll();
 
@@ -73,11 +75,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout");
 
         http.authorizeRequests()// делаем страницу регистрации недоступной для авторизированных пользователей
-                //страницы аутентификаци доступна всем
-                .antMatchers("/login").anonymous()
+                .antMatchers("/").permitAll() // доступность всем
+                .antMatchers("/login").anonymous()//страницы аутентификаци доступна всем анонимам
                 .antMatchers("/user").access("hasAnyRole('ADMIN', 'USER')")
                 .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
                 // защищенные URL
-                .antMatchers("/hello").access("hasAnyRole('ADMIN')").anyRequest().authenticated();
+                .antMatchers("/hello").access("hasAnyRole('ADMIN')")
+                .anyRequest().authenticated();
     }
 }

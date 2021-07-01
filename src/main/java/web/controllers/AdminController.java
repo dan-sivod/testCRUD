@@ -6,19 +6,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
+import web.service.RoleService;
 import web.service.UserService;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
     private UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    UserController( UserService userServiceImp){
+    AdminController(UserService userServiceImp, RoleService roleService){
         this.userService = userServiceImp;
+        this.roleService = roleService;
     }
 
     @GetMapping("/")

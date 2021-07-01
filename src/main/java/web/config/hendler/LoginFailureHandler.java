@@ -1,4 +1,4 @@
-package web.security;
+package web.config.hendler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
