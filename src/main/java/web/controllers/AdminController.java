@@ -24,7 +24,12 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/")
+    @GetMapping(value = "/")
+    public String welcome() {
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping(value = "/users")
     public String printUsers(ModelMap model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
