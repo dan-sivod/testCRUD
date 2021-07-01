@@ -49,13 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
                 .formLogin()
                 // указываем страницу с формой логина
                 .loginPage("/login")
@@ -71,16 +71,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 // указываем URL логаута
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .clearAuthentication(true)
+                .invalidateHttpSession(true) // сделать невалидной текущую сессию
+                .deleteCookies("JSESSIONID")
                 // указываем URL при удачном логауте
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/?logout")
+                .and().csrf().disable();
 
         http.authorizeRequests()// делаем страницу регистрации недоступной для авторизированных пользователей
                 .antMatchers("/").permitAll() // доступность всем
                 .antMatchers("/login").anonymous()//страницы аутентификаци доступна всем анонимам
                 .antMatchers("/user").access("hasAnyRole('ADMIN', 'USER')")
-                .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
+                //.antMatchers("/admin").access("hasAnyRole('ADMIN')")
+                .antMatchers("/admin**").access("hasAnyRole('ADMIN')")
                 // защищенные URL
-                .antMatchers("/hello").access("hasAnyRole('ADMIN')")
                 .anyRequest().authenticated();
     }
 }
