@@ -35,40 +35,46 @@ public class AdminController {
         return "users";
     }
 
-//    @GetMapping("/new")
-//    public String newUser(@ModelAttribute("user") User user) {
-//        return "new";
-//    }
-//
-//    @PostMapping()
-//    public String createUser(@ModelAttribute("User") @Valid User user, BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()) {
-//            return "new";
-//        }
-//        userService.createUser(user);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/{id}/edit")
-//    public String editUser(ModelMap model, @PathVariable("id") long id) {
-//        model.addAttribute("user", userService.readUser(id));
-//        return "edit";
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public String updateUser(@ModelAttribute("User") @Valid User user,
-//                             BindingResult bindingResult,
-//                             @PathVariable("id") long id) {
-//        if(bindingResult.hasErrors()) {
-//            return "edit";
-//        }
-//        userService.updateUser(id, user);
-//        return "redirect:/";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String deleteUser(@PathVariable("id") long id) {
-//        userService.deleteUser(id);
-//        return "redirect:/";
-//    }
+    @GetMapping("/new")
+    public String newUser(@ModelAttribute("user") User user) {
+        return "new";
+    }
+
+    @PostMapping()
+    public String createUser(@ModelAttribute("User") @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "new";
+        }
+        userService.createUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editUser(ModelMap model, @PathVariable("id") long id) {
+        model.addAttribute("user", userService.readUser(id));
+        return "edit";
+    }
+
+    @GetMapping("/{id}/user")
+    public String showUser(ModelMap model, @PathVariable("id") long id) {
+        model.addAttribute("user", userService.readUser(id));
+        return "user";
+    }
+
+    @PatchMapping("/{id}")
+    public String updateUser(@ModelAttribute("User") @Valid User user,
+                             BindingResult bindingResult,
+                             @PathVariable("id") long id) {
+        if(bindingResult.hasErrors()) {
+            return "edit";
+        }
+        userService.updateUser(id, user);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") long id) {
+        userService.deleteUser(id);
+        return "redirect:/";
+    }
 }
